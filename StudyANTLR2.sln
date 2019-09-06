@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StructuredText", "Structure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transpiler", "Transpiler\Transpiler.csproj", "{8B4165C0-CAE2-47D0-9072-180C0A0688C5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transpiler.Test", "Transpiler.Test\Transpiler.Test.csproj", "{F4F4DD32-8E05-4DEE-82F7-2039651D0E67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{8B4165C0-CAE2-47D0-9072-180C0A0688C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B4165C0-CAE2-47D0-9072-180C0A0688C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B4165C0-CAE2-47D0-9072-180C0A0688C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F4DD32-8E05-4DEE-82F7-2039651D0E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F4DD32-8E05-4DEE-82F7-2039651D0E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F4DD32-8E05-4DEE-82F7-2039651D0E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F4DD32-8E05-4DEE-82F7-2039651D0E67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
