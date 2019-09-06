@@ -37,4 +37,22 @@ public interface IStructuredTextVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitInput([NotNull] StructuredTextParser.InputContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StructuredTextParser.stmtList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStmtList([NotNull] StructuredTextParser.StmtListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StructuredTextParser.stmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitStmt([NotNull] StructuredTextParser.StmtContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="StructuredTextParser.assignStmt"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAssignStmt([NotNull] StructuredTextParser.AssignStmtContext context);
 }

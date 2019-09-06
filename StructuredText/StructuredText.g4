@@ -1,6 +1,16 @@
 grammar StructuredText;
 
-input: .*? EOF;
+input: stmtList EOF;
+
+stmtList
+    : ( stmt? SEMI_COLON )*
+    ;
+stmt
+    : assignStmt
+    ;
+assignStmt
+    : variable=IDENTIFIER ASSIGN expression=IDENTIFIER
+    ;
 
 PLUS : '+';
 MINUS : '-';
