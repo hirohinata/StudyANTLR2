@@ -25,7 +25,7 @@ namespace StructuredText
 
         public override string VisitAssignStmt([NotNull] StructuredTextParser.AssignStmtContext context)
         {
-            return context.variable.Text + " := " + context.expression.Text;
+            return context.variable().GetText() + " := " + context.expression().GetText();
         }
     }
 }

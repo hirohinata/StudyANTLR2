@@ -7,9 +7,90 @@ stmtList
     ;
 stmt
     : assignStmt
+    | subprogCtrlStmt
+//    | selectionStmt
+//    | iterationStmt
     ;
 assignStmt
-    : variable=IDENTIFIER ASSIGN expression=IDENTIFIER
+    : variable ASSIGN expression
+//    | refAssign
+//    | assignmentAttempt
+    ;
+subprogCtrlStmt
+    : funcCall
+//    | invocation
+    | SUPER OPEN_PAREN CLOSE_PAREN
+    | RETURN
+    ;
+
+expression
+    : xorExpr ( OR xorExpr )*
+    ;
+xorExpr
+    : andExpr ( XOR andExpr )*
+    ;
+andExpr
+    : compareExpr ( (AND | AMPERSAND) compareExpr )*
+    ;
+compareExpr
+    : equExpr ( (EQ | NEQ) equExpr )*
+    ;
+equExpr
+    : addExpr ( (LT | GT | LE | GE) addExpr )*
+    ;
+addExpr
+    : term ( (PLUS | MINUS) term )*
+    ;
+term
+    : powerExpr ( (ASTERISK | SLASH | MOD) powerExpr )*
+    ;
+powerExpr
+    : unaryExpr ( POW unaryExpr )*
+    ;
+unaryExpr
+    : ( MINUS | PLUS | NOT )? primaryExpr
+    ;
+primaryExpr
+    : constant
+//    | enumValue
+    | variableAccess
+    | funcCall
+//    | refValue
+    | OPEN_PAREN expression CLOSE_PAREN
+    ;
+
+constant
+    : numericLiteral
+    | CHAR_LITERAL
+//    | timeLiteral
+    | BIT_STR_LITERAL
+    | BOOL_LITERAL
+    ;
+numericLiteral
+    : INT_LITERAL
+    | REAL_LITERAL
+    ;
+
+variableAccess
+    : variable      //TODO:配列・メンバ・ワード中ビット等の対応
+    ;
+variable
+    : variableName  //TODO:直接表現や名前空間等の対応
+    ;
+variableName
+    : IDENTIFIER
+    ;
+
+funcCall
+    : funcAccess OPEN_PAREN ( paramAssign ( COMMA paramAssign )* )? CLOSE_PAREN
+    ;
+funcAccess
+    : IDENTIFIER    //TODO:名前空間等の対応
+    ;
+paramAssign
+    : ( ( variableName ASSIGN )? expression )
+//    | refAssign
+    |  ( NOT? variableName OUTREF variable )
     ;
 
 PLUS : '+';
@@ -30,6 +111,16 @@ COMMA: ',';
 OPEN_PAREN : '(';
 CLOSE_PAREN : ')';
 SEMI_COLON: ';';
+AMPERSAND: '&';
+
+OR: O R;
+XOR: X O R;
+AND: A N D;
+MOD: M O D;
+NOT: N O T;
+
+SUPER: S U P E R;
+RETURN: R E T U R N;
 
 CASE: C A S E;
 OF: O F;
@@ -37,6 +128,18 @@ END_CASE: E N D '_' C A S E;
 REPEAT: R E P E A T;
 UNTIL: U N T I L;
 END_REPEAT: E N D '_' R E P E A T;
+
+fragment DIGIT: [0-9];
+fragment UNSIGNED_INT: DIGIT ( '_'? DIGIT )*;
+fragment SIGNED_INT: ( PLUS | MINUS )? UNSIGNED_INT;
+fragment BINARY_INT: '2#' ( '_'? [0-1] )+;
+fragment OCTAL_INT: '8#' ( '_'? [0-7] )+;
+fragment HEX_INT: '16#' ( '_'? [0-9A-Fa-f] )+;
+INT_LITERAL: ( INT_TYPE_NAME '#' )? ( SIGNED_INT | BINARY_INT | OCTAL_INT | HEX_INT );
+REAL_LITERAL: ( REAL_TYPE_NAME '#' )? SIGNED_INT '.' UNSIGNED_INT ( 'E' SIGNED_INT )?;
+BIT_STR_LITERAL: ( MULTIBITS_TYPE_NAME '#' )? ( UNSIGNED_INT | BINARY_INT | OCTAL_INT | HEX_INT );
+BOOL_LITERAL: ( BOOL '#' )? ( '0' | '1' | 'FALSE' |'TRUE' );
+CHAR_LITERAL: ( STRING '#' )? ( '\'' ~['\r\n]* '\'' | '"' ~["\r\n]* '"' );
 
 fragment ID_START: [A-Za-z_];
 fragment ID_CONTINUE: ID_START | [0-9];
@@ -46,14 +149,29 @@ WS: [ \t]+ -> skip;
 EOL: ('\r'? '\n' | '\r') -> skip;
 SINGLE_LINE_COMMENT: '//' ~[\r\n]*;
 
+fragment BOOL: B O O L;
 fragment INT: I N T;
+fragment SINT: S INT;
 fragment DINT: D INT;
+fragment LINT: L INT;
+fragment USINT: U SINT;
 fragment UINT: U INT;
 fragment UDINT: U DINT;
+fragment ULINT: U LINT;
 fragment REAL: R E A L;
 fragment LREAL: L REAL;
 fragment STRING: S T R I N G;
 fragment WSTRING: W STRING;
+fragment BYTE: B Y T E;
+fragment WORD: W O R D;
+fragment DWORD: D W O R D;
+fragment LWORD: L W O R D;
+
+fragment SIGN_INT_TYPE_NAME: SINT | INT | DINT | LINT;
+fragment UNSIGN_INT_TYPE_NAME: USINT | UINT | UDINT | ULINT;
+fragment INT_TYPE_NAME: SIGN_INT_TYPE_NAME | UNSIGN_INT_TYPE_NAME;
+fragment REAL_TYPE_NAME: REAL | LREAL;
+fragment MULTIBITS_TYPE_NAME: BYTE | WORD | DWORD | LWORD;
 
 fragment A: [Aa];
 fragment B: [Bb];
