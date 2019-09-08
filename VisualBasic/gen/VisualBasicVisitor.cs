@@ -164,9 +164,24 @@ public interface IVisualBasicVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFuncAccess([NotNull] VisualBasicParser.FuncAccessContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="VisualBasicParser.paramAssign"/>.
+	/// Visit a parse tree produced by the <c>namelessParamAssign</c>
+	/// labeled alternative in <see cref="VisualBasicParser.paramAssign"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitParamAssign([NotNull] VisualBasicParser.ParamAssignContext context);
+	Result VisitNamelessParamAssign([NotNull] VisualBasicParser.NamelessParamAssignContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>inParamAssign</c>
+	/// labeled alternative in <see cref="VisualBasicParser.paramAssign"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInParamAssign([NotNull] VisualBasicParser.InParamAssignContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>outParamAssign</c>
+	/// labeled alternative in <see cref="VisualBasicParser.paramAssign"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOutParamAssign([NotNull] VisualBasicParser.OutParamAssignContext context);
 }

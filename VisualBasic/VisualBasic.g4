@@ -21,34 +21,34 @@ subprogCtrlStmt
     ;
 
 expression
-    : orExpr ( XOR orExpr )*
+    : lhs=orExpr ( operand=XOR rhs=orExpr )*
     ;
 orExpr
-    : andExpr ( OR andExpr )*
+    : lhs=andExpr ( operand=OR rhs=andExpr )*
     ;
 andExpr
-    : notExpr ( AND notExpr )*
+    : lhs=notExpr ( operand=AND rhs=notExpr )*
     ;
 notExpr
-    : NOT* compareExpr
+    : operand=NOT* rhs=compareExpr
     ;
 compareExpr
-    : addExpr ( (EQ | NEQ | LT | GT | LE | GE) addExpr )*
+    : lhs=addExpr ( operand=(EQ | NEQ | LT | GT | LE | GE) rhs=addExpr )*
     ;
 addExpr
-    : modExpr ( (PLUS | MINUS) modExpr )*
+    : lhs=modExpr ( operand=(PLUS | MINUS) rhs=modExpr )*
     ;
 modExpr
-    : term ( MOD term )*
+    : lhs=term ( operand=MOD rhs=term )*
     ;
 term
-    : unaryExpr ( (ASTERISK | SLASH) unaryExpr )*
+    : lhs=unaryExpr ( operand=(ASTERISK | SLASH) rhs=unaryExpr )*
     ;
 unaryExpr
-    : ( MINUS | PLUS )? powerExpr
+    : operand=( MINUS | PLUS )? rhs=powerExpr
     ;
 powerExpr
-    : primaryExpr ( HAT primaryExpr )*
+    : lhs=primaryExpr ( operand=HAT rhs=primaryExpr )*
     ;
 primaryExpr
     : constant
@@ -79,15 +79,16 @@ variableName
     ;
 
 funcCall
-    : funcAccess OPEN_PAREN ( paramAssign ( COMMA paramAssign )* )? CLOSE_PAREN
+    : funcAccess OPEN_PAREN ( args=paramAssign ( COMMA args=paramAssign )* )? CLOSE_PAREN
     ;
 funcAccess
     : IDENTIFIER    //TODO:名前空間等の対応
     ;
 paramAssign
-    : ( ( variableName ASSIGN )? expression )
-//    | refAssign
-    |  ( NOT? variableName ASSIGN variable )
+    : expression                            #namelessParamAssign
+//    | refAssign                             #namelessParamAssign
+    | variableName ASSIGN expression        #inParamAssign
+    | NOT? variableName ASSIGN variable     #outParamAssign
     ;
 
 PLUS : '+';
