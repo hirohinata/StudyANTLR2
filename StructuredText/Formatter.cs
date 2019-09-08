@@ -1,31 +1,19 @@
-﻿using System;
-using System.Linq;
-using Antlr4.Runtime.Misc;
+﻿using Antlr4.Runtime.Tree;
 
 namespace StructuredText
 {
     public class Formatter : StructuredTextBaseVisitor<string>
     {
-        public override string VisitInput([NotNull] StructuredTextParser.InputContext context)
+        protected override string AggregateResult(string aggregate, string nextResult)
         {
-            return Visit(context.stmtList());
+            return aggregate + nextResult;
         }
 
-        public override string VisitStmtList([NotNull] StructuredTextParser.StmtListContext context)
+        public override string VisitTerminal(ITerminalNode node)
         {
-            return context.stmt()
-                    .Select(stmt => Visit(stmt) + ";")
-                    .Aggregate((a, b) => a + Environment.NewLine);
-        }
-
-        public override string VisitStmt([NotNull] StructuredTextParser.StmtContext context)
-        {
-            return base.VisitStmt(context);
-        }
-
-        public override string VisitAssignStmt([NotNull] StructuredTextParser.AssignStmtContext context)
-        {
-            return context.variable().GetText() + " := " + context.expression().GetText();
+            if (node.Symbol.Type < 0)
+                return string.Empty;
+            return node.GetText();
         }
     }
 }
