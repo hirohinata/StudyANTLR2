@@ -254,7 +254,8 @@ public partial class StructuredTextBaseVisitor<Result> : AbstractParseTreeVisito
 	/// <return>The visitor result.</return>
 	public virtual Result VisitFuncAccess([NotNull] StructuredTextParser.FuncAccessContext context) { return VisitChildren(context); }
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="StructuredTextParser.paramAssign"/>.
+	/// Visit a parse tree produced by the <c>namelessParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
 	/// <para>
 	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
 	/// on <paramref name="context"/>.
@@ -262,5 +263,27 @@ public partial class StructuredTextBaseVisitor<Result> : AbstractParseTreeVisito
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	public virtual Result VisitParamAssign([NotNull] StructuredTextParser.ParamAssignContext context) { return VisitChildren(context); }
+	public virtual Result VisitNamelessParamAssign([NotNull] StructuredTextParser.NamelessParamAssignContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>inParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitInParamAssign([NotNull] StructuredTextParser.InParamAssignContext context) { return VisitChildren(context); }
+	/// <summary>
+	/// Visit a parse tree produced by the <c>outParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
+	/// <para>
+	/// The default implementation returns the result of calling <see cref="AbstractParseTreeVisitor{Result}.VisitChildren(IRuleNode)"/>
+	/// on <paramref name="context"/>.
+	/// </para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	public virtual Result VisitOutParamAssign([NotNull] StructuredTextParser.OutParamAssignContext context) { return VisitChildren(context); }
 }

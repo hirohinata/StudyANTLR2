@@ -164,9 +164,24 @@ public interface IStructuredTextVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitFuncAccess([NotNull] StructuredTextParser.FuncAccessContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="StructuredTextParser.paramAssign"/>.
+	/// Visit a parse tree produced by the <c>namelessParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitParamAssign([NotNull] StructuredTextParser.ParamAssignContext context);
+	Result VisitNamelessParamAssign([NotNull] StructuredTextParser.NamelessParamAssignContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>inParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInParamAssign([NotNull] StructuredTextParser.InParamAssignContext context);
+	/// <summary>
+	/// Visit a parse tree produced by the <c>outParamAssign</c>
+	/// labeled alternative in <see cref="StructuredTextParser.paramAssign"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOutParamAssign([NotNull] StructuredTextParser.OutParamAssignContext context);
 }
