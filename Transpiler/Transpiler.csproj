@@ -7,5 +7,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\StructuredText\StructuredText.csproj" />
+    <ProjectReference Include="..\VisualBasic\VisualBasic.csproj" />
   </ItemGroup>
 </Project>

@@ -7,7 +7,7 @@ namespace Transpiler
         static void Main(string[] args)
         {
             foreach (var arg in args) {
-                Console.WriteLine(Parser.StructuredTextToStructuredText(arg));
+                Console.WriteLine(StructuredTextToVisualBasic.Parse(arg));
             }
         }
     }

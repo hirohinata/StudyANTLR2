@@ -1,8 +1,8 @@
 ﻿using Antlr4.Runtime.Tree;
 
-namespace StructuredText
+namespace VisualBasic
 {
-    public class Formatter : StructuredTextBaseVisitor<string>
+    public class Formatter : VisualBasicBaseVisitor<string>
     {
         protected override string AggregateResult(string aggregate, string nextResult)
         {
